@@ -6,7 +6,9 @@ const Main = () => {
     return (
         <>
         <Header/>
+        <section className="min-h-[calc(100vh-306px)]">
         <Outlet/>
+        </section>
         <Footer/>
         </>
     );
