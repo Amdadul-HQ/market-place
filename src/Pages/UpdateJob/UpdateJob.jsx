@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/ContextComponent";
 import DatePicker from "react-datepicker";
 
@@ -13,6 +13,8 @@ const UpdateJob = () => {
     const job = useLoaderData()
     const {user} = useContext(AuthContext)
 
+    const navigate = useNavigate()
+
 
     const{ _id,job_title,description,min_price,max_price,buyer_email,category } = job
 
@@ -20,7 +22,7 @@ const UpdateJob = () => {
         e.preventDefault()
         const form = e.target;
 
-        console.log(form.upmin_price,form.upmax_price);
+        // console.log(form.upmin_price,form.upmax_price);
 
         const upbuyer_email = user.email;
         const upbuyer_name = user.displayName;
@@ -41,6 +43,7 @@ const UpdateJob = () => {
         .then(res => {
             console.log(res.data);
             toast.success('Updated!!!')
+            navigate('/postedjob')
         })
     }
 

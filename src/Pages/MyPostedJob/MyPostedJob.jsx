@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/ContextComponent";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -11,12 +11,16 @@ const MyPostedJob = () => {
     const {user} = useContext(AuthContext)
 
     const {data,refetch} = useQuery({
-        queryKey:['jobs'],
+        queryKey:['myjob'],
         queryFn:async()=> {
             const data = await fetch(`http://localhost:5000/mypostedjob/${user?.email}`)
             return  data.json()
         }
     })
+    useEffect(()=>{
+
+      refetch()
+    },[refetch])
 
     const handleDelete = id => {
         axios.delete(`http://localhost:5000/jobs/${id}`)

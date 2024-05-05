@@ -1,18 +1,23 @@
 
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/ContextComponent';
 import toast from 'react-hot-toast';
 import logo from '../../assets/logo.png'
 
 const Login = () => {
     const {signInWithGoogle,signIn} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    console.log(location);
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
         .then(result => {
-            console.log(result);
+            // console.log(result);
             toast.success('Successfully toasted!')
+            navigate(`${location?.state ? location.state : '/'}`)
+
         })
         .catch(error => {
             console.log(error);
@@ -27,7 +32,8 @@ const Login = () => {
 
         signIn(email,password)
         .then(result => {
-            console.log(result)
+            // console.log(result)
+            navigate(`${location?.state ? location.state : '/'}`)
             toast.success('Login Successful')
         })
         .catch(error => {

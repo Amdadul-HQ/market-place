@@ -1,16 +1,18 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/ContextComponent";
 import toast from "react-hot-toast";
 import logo from '../../assets/logo.png'
 
 const Header = () => {
     const {user,logOut} = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleLogOut = ()=> {
         logOut()
         .then(()=> {
             toast.success('Successfully Logout!')
+            navigate('/')
         })
         .catch(()=>{
             toast.error("This didn't work.")

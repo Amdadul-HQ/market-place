@@ -8,6 +8,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import AddJob from "../Pages/AddJob/AddJob";
 import MyPostedJob from "../Pages/MyPostedJob/MyPostedJob";
 import UpdateJob from "../Pages/UpdateJob/UpdateJob";
+import PrivateRoutes from "../Private/PrivateRoutes";
 
 const router = createBrowserRouter([{
     path:'/',
@@ -28,8 +29,8 @@ const router = createBrowserRouter([{
         },
         {
             path:'/jobs/:id',
-            element:<JobDetails/>,
-            loader:async({params})=> await fetch(`http://localhost:5000/jobs/${params.id}`)
+            element:<PrivateRoutes><JobDetails/></PrivateRoutes>,
+            loader:async({params})=> await fetch(`http://localhost:5000/jobs/${params?.id}`)
         },
         {
             path:'/addjob',
@@ -37,12 +38,12 @@ const router = createBrowserRouter([{
         },
         {
             path:'/postedjob',
-            element:<MyPostedJob/>
+            element:<MyPostedJob/>,
         },
         {
             path:'/upjob/:id',
             element:<UpdateJob/>,
-            loader: async ({params})=>  await fetch(`http://localhost:5000/jobs/${params.id}`)
+            loader: async ({params})=>  await fetch(`http://localhost:5000/jobs/${params?.id}`)
         }
 ]
 }])
