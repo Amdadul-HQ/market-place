@@ -1,7 +1,41 @@
 
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/ContextComponent';
+import toast from 'react-hot-toast';
+import logo from '../../assets/logo.png'
 
 const Login = () => {
+    const {signInWithGoogle,signIn} = useContext(AuthContext)
+
+    const handleGoogleSignIn = () => {
+        signInWithGoogle()
+        .then(result => {
+            console.log(result);
+            toast.success('Successfully toasted!')
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        
+    }
+    const handleSignIn = e =>{
+        e.preventDefault()
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        signIn(email,password)
+        .then(result => {
+            console.log(result)
+            toast.success('Login Successful')
+        })
+        .catch(error => {
+            console.log(error)
+            toast.error('Unavailable to Login')
+        })
+    }
+
     return (
         <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
       <div className='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
@@ -16,7 +50,7 @@ const Login = () => {
           <div className='flex justify-center mx-auto'>
             <img
               className='w-auto h-7 sm:h-8'
-              src='https://merakiui.com/images/logo.svg'
+              src={logo}
               alt=''
             />
           </div>
@@ -47,7 +81,7 @@ const Login = () => {
               </svg>
             </div>
 
-            <span className='w-5/6 px-4 py-3 font-bold text-center'>
+            <span onClick={handleGoogleSignIn} className='w-5/6 px-4 py-3 font-bold text-center'>
               Sign in with Google
             </span>
           </div>
@@ -61,7 +95,7 @@ const Login = () => {
 
             <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
           </div>
-          <form>
+          <form onSubmit={handleSignIn}>
             <div className='mt-4'>
               <label
                 className='block mb-2 text-sm font-medium text-gray-600 '

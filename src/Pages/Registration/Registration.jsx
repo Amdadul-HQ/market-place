@@ -1,7 +1,48 @@
 
 import { Link } from 'react-router-dom';
+import logo from '../../assets/logo.png'
+import { useContext } from 'react';
+import { AuthContext } from '../../Context/ContextComponent';
+import toast from 'react-hot-toast';
 
 const Registration = () => {
+
+    const {createUser,signInWithGoogle,logOut,updateUserProfile} = useContext(AuthContext)
+    
+    const handelRegistration = e => {
+        e.preventDefault()
+        const form = e.target;
+        const email = form.email.value;
+        const fullName = form.name.value;
+        const password = form.password.value;
+        const photo = form.photo.value;
+
+        createUser(email,password)
+        .then(result => {
+            updateUserProfile(fullName,photo)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error=> {
+                console.log(error);
+            })
+            toast.success('Sign Up Successfully')
+            logOut()
+            .then(()=>{
+                console.log('logout');
+            })
+            .catch(error => console.log(error))
+        })
+        .catch(error => {
+            toast.error('Unavailable to Sign Up')
+        })
+
+
+        const registarUser = {
+            email,fullName,password,photo
+        }
+    }
+
     return (
         <div className='flex justify-center items-center min-h-[calc(100vh-306px)]'>
         <div className='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl '>
@@ -9,7 +50,7 @@ const Registration = () => {
             <div className='flex justify-center mx-auto'>
               <img
                 className='w-auto h-7 sm:h-8'
-                src='https://merakiui.com/images/logo.svg'
+                src={logo}
                 alt=''
               />
             </div>
@@ -54,7 +95,7 @@ const Registration = () => {
   
               <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
             </div>
-            <form>
+            <form onSubmit={handelRegistration}>
               <div className='mt-4'>
                 <label
                   className='block mb-2 text-sm font-medium text-gray-600 '
@@ -82,7 +123,7 @@ const Registration = () => {
                   autoComplete='photo'
                   name='photo'
                   className='block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300'
-                  type='text'
+                  type='url'
                 />
               </div>
               <div className='mt-4'>
