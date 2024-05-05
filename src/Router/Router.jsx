@@ -7,6 +7,7 @@ import JobDetails from "../Pages/JobDetails/JobDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import AddJob from "../Pages/AddJob/AddJob";
 import MyPostedJob from "../Pages/MyPostedJob/MyPostedJob";
+import UpdateJob from "../Pages/UpdateJob/UpdateJob";
 
 const router = createBrowserRouter([{
     path:'/',
@@ -40,7 +41,8 @@ const router = createBrowserRouter([{
         },
         {
             path:'/upjob/:id',
-            element:<
+            element:<UpdateJob/>,
+            loader: async ({params})=>  await fetch(`http://localhost:5000/jobs/${params.id}`)
         }
 ]
 }])

@@ -136,7 +136,7 @@ const MyPostedJob = () => {
                                   </svg>
                                 </button>
         
-                                <Link to={`/jobs/${job._id}`} className='text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none'>
+                                <Link to={`/upjob/${job._id}`} className='text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none'>
                                   <svg
                                     xmlns='http://www.w3.org/2000/svg'
                                     fill='none'
