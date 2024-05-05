@@ -1,8 +1,8 @@
 const Header = () => {
     return (
-        <div>
-            
-        </div>
+        <header className="font-lato">
+            <h1>Hello World</h1>
+        </header>
     );
 };
 
